@@ -2,6 +2,7 @@ import { isNonEmptyArray } from "@apollo/client/utilities";
 import { isEmpty, isArray } from "lodash";
 import Link from "next/link";
 import sanitizeHtml from "sanitize-html";
+import { getIconComponentByName } from "../../../utils/icons-map";
 
 export default function Footer({ footer, footerMenus }) {
   return (
@@ -50,7 +51,19 @@ export default function Footer({ footer, footerMenus }) {
             : "Copyright Mr Blobby 2021"}
         </div>
 
-        <div className="my-2 px-2 w-full overflow-hidden xl:w-1/2"></div>
+        <div className="w-full lg:w-3/4 flex justify-end">
+          {!isEmpty(footer?.socialLinks) && isArray(footer?.socialLinks) ? (
+            <ul className="flex items-center">
+              {footer?.socialLinks.map((socialLink) => (
+                <li key={socialLink?.iconName} className="ml-2">
+                  <a href={socialLink?.iconUrl}>
+                    {getIconComponentByName(socialLink?.iconName)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
       </div>
     </footer>
   );
