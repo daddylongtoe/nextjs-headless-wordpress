@@ -24,6 +24,7 @@ export default function Nav({ header, headerMenus }) {
 
       <div className="block lg:hidden">
         <button
+          data-cy="mmenu-btn"
           onClick={() => setIsMenuVisible(!isMenuVisible)}
           className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
         >
@@ -44,11 +45,14 @@ export default function Nav({ header, headerMenus }) {
       >
         {headerMenus.length ? (
           <div className="text-sm lg:flex-grow">
-            {headerMenus.map((item) => {
+            {headerMenus.map((menu) => {
               return (
-                <Link key={item?.node?.id} href={item?.node?.path}>
-                  <a className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                    {item?.node?.label}
+                <Link key={menu?.node?.id} href={menu?.node?.path}>
+                  <a
+                    data-cy="nav-item"
+                    className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+                  >
+                    {menu?.node?.label}
                   </a>
                 </Link>
               );
