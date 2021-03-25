@@ -21,6 +21,7 @@ export default function Nav({ header, headerMenus }) {
           <span className=" text-sm tracking-tight">{header.siteTagLine}</span>
         </div>
       </div>
+
       <div className="block lg:hidden">
         <button
           onClick={() => setIsMenuVisible(!isMenuVisible)}

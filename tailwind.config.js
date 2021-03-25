@@ -16,7 +16,11 @@ module.exports = {
       pink: colors.fuchsia,
       white: colors.white,
     },
-    extend: {},
+    extend: {
+      height: {
+        "almost-screen": "calc(-18rem + 100vh)",
+      },
+    },
   },
   variants: {},
   plugins: [require("tailwindcss"), require("precss"), require("autoprefixer")],
