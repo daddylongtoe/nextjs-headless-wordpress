@@ -1,34 +1,55 @@
-import Footer from "./footer";
 import Header from "./header";
+import Footer from "./footer";
 import Head from "next/head";
 import Seo from "../seo";
 import { isEmpty } from "lodash";
+// import { sanitize } from "../../utils/miscellaneous";
+import PropTypes, { func } from "prop-types";
 import sanitize from "sanitize-html";
 
-export default function Layout({ data, children }) {
-  if (isEmpty(data?.page)) return null;
+export default function Layout({ data, isPost, children }) {
+  const { page, post, posts, header, footer, headerMenus, footerMenus } =
+    data || {};
 
-  const { page, header, footer, headerMenus, footerMenus } = data || {};
+  // If it does not have either post or page.
+  if (isEmpty(page) && isEmpty(post) && isEmpty(posts)) {
+    return null;
+  }
+
+  const seo = isPost ? post?.seo ?? {} : page?.seo ?? {};
+  const uri = isPost ? post?.uri ?? {} : page?.uri ?? {};
 
   return (
-    <>
-      <Seo seo={page?.seo} uri={page?.uri} />
+    <div>
+      <Seo seo={seo} uri={uri} />
       <Head>
         <link rel="shortcut icon" href={header?.favicon} />
-        {page?.seo?.schemaDetails && (
+        {seo?.schemaDetails ? (
           <script
             type="application/ld+json"
             className="yoast-schema-graph"
             key="yoastSchema"
-            dangerouslySetInnerHTML={{
-              __html: sanitize(page?.seo?.schemaDetails),
-            }}
+            dangerouslySetInnerHTML={{ __html: sanitize(seo.schemaDetails) }}
           />
-        )}
+        ) : null}
       </Head>
       <Header header={header} headerMenus={headerMenus?.edges} />
-      <div className="min-h-almost-screen">{children}</div>
+      <div className="md:container px-5 py-24 mx-auto min-h-almost-screen">
+        {children}
+      </div>
       <Footer footer={footer} footerMenus={footerMenus?.edges} />
-    </>
+    </div>
   );
 }
+
+Layout.propTypes = {
+  data: PropTypes.object,
+  isPost: PropTypes.bool,
+  children: PropTypes.object,
+};
+
+Layout.defaultProps = {
+  data: {},
+  isPost: false,
+  children: {},
+};

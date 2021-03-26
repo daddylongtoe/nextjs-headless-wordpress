@@ -7,10 +7,19 @@ export const getPreviewRedirectUrl = (postType = "", previewPostId = "") => {
 
   switch (postType) {
     case "post":
-      return "/blog/preview/${previewPostId}";
+      return `/blog/preview/${previewPostId}/`;
     case "page":
-      return "/page/preview/${previewPostId}";
+      return `/page/preview/${previewPostId}/`;
     default:
       return "/";
   }
+};
+
+export const getLoginPreviewRedirectUrl = (
+  postType = "",
+  previewPostId = ""
+) => {
+  return `/login/?postType=${postType || ""}&previewPostId=${
+    previewPostId || ""
+  }`;
 };
