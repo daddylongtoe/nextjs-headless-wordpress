@@ -4,12 +4,12 @@ import { isEmpty } from "lodash";
 import { GET_PAGE } from "../src/queries/pages/get-page";
 import { useRouter } from "next/router";
 import Layout from "../src/components/layout";
-import { GET_MENUS } from "../src/queries/get-menus";
 import {
   handleRedirectsAndReturnData,
   isCustomPageUri,
   FALLBACK,
 } from "../src/utils/slugs";
+import sanitize from "sanitize-html";
 
 export default function Page({ data }) {
   const router = useRouter();
@@ -20,7 +20,15 @@ export default function Page({ data }) {
     return <div>Loading...</div>;
   }
 
-  return <Layout data={data}>{router?.query?.slug?.join("/")}</Layout>;
+  return (
+    <Layout data={data}>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: sanitize(data?.page?.content ?? ""),
+        }}
+      />
+    </Layout>
+  );
 }
 
 export async function getStaticProps({ params }) {
