@@ -27,7 +27,7 @@ export default function Layout({ data, children }) {
         )}
       </Head>
       <Header header={header} headerMenus={headerMenus?.edges} />
-      <div className="h-almost-screen">{children}</div>
+      <div className="min-h-almost-screen">{children}</div>
       <Footer footer={footer} footerMenus={footerMenus?.edges} />
     </>
   );

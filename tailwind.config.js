@@ -17,7 +17,7 @@ module.exports = {
       white: colors.white,
     },
     extend: {
-      height: {
+      minHeight: {
         "almost-screen": "calc(-18rem + 100vh)",
       },
     },

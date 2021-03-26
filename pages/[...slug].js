@@ -5,7 +5,11 @@ import { GET_PAGE } from "../src/queries/pages/get-page";
 import { useRouter } from "next/router";
 import Layout from "../src/components/layout";
 import { GET_MENUS } from "../src/queries/get-menus";
-import { handleRedirectsAndReturnData, isCustomUri } from "../src/utils/slugs";
+import {
+  handleRedirectsAndReturnData,
+  isCustomUri,
+  FALLBACK,
+} from "../src/utils/slugs";
 
 export default function Page({ data }) {
   console.log("...slug data", data);
@@ -55,6 +59,6 @@ export async function getStaticPaths() {
 
   return {
     paths: pathsData,
-    fallback: true,
+    fallback: FALLBACK,
   };
 }
