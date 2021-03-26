@@ -2,8 +2,8 @@ import { isEmpty } from "lodash";
 
 export const FALLBACK = "blocking";
 
-export const isCustomUri = (uri) => {
-  const pagesToExclude = ["/"];
+export const isCustomPageUri = (uri) => {
+  const pagesToExclude = ["/", "/blog/", "/news/"];
 
   return pagesToExclude.includes(uri);
 };
@@ -12,10 +12,20 @@ export const handleRedirectsAndReturnData = (
   defaultProps,
   data,
   errors,
-  field
+  field,
+  isPreview = false,
+  loginRedirectURL = ""
 ) => {
+  if (isPreview && null === data?.[field]) {
+    return {
+      redirect: {
+        destination: loginRedirectURL || "/",
+        statusCode: 307,
+      },
+    };
+  }
+
   if (isEmpty(data)) {
-    console.log("data is empty");
     return {
       redirect: {
         destination: "/503",

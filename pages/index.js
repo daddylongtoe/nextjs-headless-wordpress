@@ -5,7 +5,6 @@ import { GET_PAGE } from "../src/queries/pages/get-page";
 import { handleRedirectsAndReturnData } from "../src/utils/slugs";
 
 export default function Index({ data }) {
-  console.log("Home data", data);
   return (
     <Layout data={data}>
       <h3 className="text-lg leading-6 font-medium text-gray-900">Content</h3>

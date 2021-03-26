@@ -1,5 +1,4 @@
 import client from "../../../src/apollo/client";
-// import { GET_PAGE_BY_ID } from "../../../src/queries/pages/get-page";
 import Layout from "../../../src/components/layout";
 import { handleRedirectsAndReturnData } from "../../../src/utils/slugs";
 import { getAuthToken } from "../../../src/utils/cookies";
@@ -22,9 +21,7 @@ export default function PostPreview({ data }) {
 
 export async function getServerSideProps(context) {
   const authToken = getAuthToken(context.req);
-  console.log(context?.params?.id);
   const { params } = context || {};
-
   const { data, errors } = await client.query({
     query: GET_POST_BY_ID,
     variables: {

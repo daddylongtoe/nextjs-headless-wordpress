@@ -7,12 +7,11 @@ import Layout from "../src/components/layout";
 import { GET_MENUS } from "../src/queries/get-menus";
 import {
   handleRedirectsAndReturnData,
-  isCustomUri,
+  isCustomPageUri,
   FALLBACK,
 } from "../src/utils/slugs";
 
 export default function Page({ data }) {
-  console.log("...slug data", data);
   const router = useRouter();
 
   // if the page is not yet generated, this will be displayed
@@ -51,7 +50,7 @@ export async function getStaticPaths() {
 
   data?.pages?.nodes &&
     data?.pages?.nodes.map((page) => {
-      if (!isEmpty(page?.uri) && !isCustomUri(page?.uri)) {
+      if (!isEmpty(page?.uri) && !isCustomPageUri(page?.uri)) {
         const slugs = page?.uri?.split("/").filter((pageSlug) => pageSlug);
         pathsData.push({ params: { slug: slugs } });
       }

@@ -3,7 +3,7 @@ import { isEmpty } from "lodash";
 import { getPreviewRedirectUrl } from "../../src/utils/redirects";
 
 export default async function preview(req, res) {
-  const { postType, postId } = req.query;
+  const { postType, postId } = await req.query;
 
   const authToken = getAuthToken(req);
 
