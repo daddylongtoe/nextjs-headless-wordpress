@@ -5,7 +5,7 @@ import { GET_PAGE } from "../src/queries/pages/get-page";
 import { useRouter } from "next/router";
 import Layout from "../src/components/layout";
 import { GET_MENUS } from "../src/queries/get-menus";
-import { isCustomUri } from "../src/utils/slugs";
+import { handleRedirectsAndReturnData, isCustomUri } from "../src/utils/slugs";
 
 export default function Page({ data }) {
   console.log("...slug data", data);
@@ -21,28 +21,21 @@ export default function Page({ data }) {
 }
 
 export async function getStaticProps({ params }) {
-  const { data } = await client.query({
+  const { data, errors } = await client.query({
     query: GET_PAGE,
     variables: {
       uri: params?.slug.join("/"),
     },
   });
 
-  return {
+  const defaultProps = {
     props: {
-      data: {
-        header: data?.header || [],
-        menus: {
-          headerMenus: data?.headerMenus?.edges || [],
-          footerMenus: data?.footerMenus?.edges || [],
-        },
-        footer: data?.footer || [],
-        page: data?.page ?? {},
-        path: params?.slug.join("/"),
-      },
+      data: data || {},
     },
     revalidate: 1,
   };
+
+  return handleRedirectsAndReturnData(defaultProps, data, errors, "page");
 }
 
 export async function getStaticPaths() {
